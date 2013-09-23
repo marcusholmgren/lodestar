@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Foundation 4</title>
+
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <script src="Scripts/custom.modernizr.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="large-offset-3">
+            <h1>Welcome</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <h2>Left</h2>
+            <div id="left" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <h2>Right</h2>
+            <div id="right" />
+        </div>
+    </div>
+
+    <script type="text/template" id="tpl-info">
+        <% _.each(items, function(info) { %>
+        <div class="row">
+            <div class="large-4 columns">
+           <h4><%= info.Title %></h4>
+            <span><%= info.Message %></span>
+            </div>
+        </div>
+        <% }); %>
+    </script>
+
+    <script src="Scripts/jquery-2.0.3.min.js"></script>
+    <script src="Scripts/foundation.min.js"></script>
+    <script src="Scripts/underscore.min.js"></script>
+    <script src="Scripts/backbone.min.js"></script>
+    <script src="Scripts/lodestar.js"></script>
+    <script>
+        var $document = $(document);
+        $document.foundation();
+        $document.ready(function () {
+            var lc = new lodestar.InfoCollection([], { url: "/left" });
+            var lv = new lodestar.InfoView({ el: "#left", model: lc });
+            lv.model.fetch({ success: function () { lv.render(); } });
+
+            var rc = new lodestar.InfoCollection([], { url: "/right" });
+            var rv = new lodestar.InfoView({ el: "#right", model: rc });
+            rv.model.fetch({ success: function () { rv.render(); } });
+        });
+    </script>
+</body>
+</html>
